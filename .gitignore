@@ -1,0 +1,5 @@
+# originals (the site uses the copies in assets/)
+Screenshot*.png
+flight park logo.png
+
+.DS_Store
