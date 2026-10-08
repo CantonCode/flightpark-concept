@@ -808,8 +808,8 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
         box.textContent = "Payment received. You're member #" + res.memberNo + ": " + res.pass + ", " + (later ? "pre-booked for " : "valid ") + range(res) + ".";
         loadMembers();
       }
-      else { box.className = "form-msg err"; box.textContent = (res.error || "We couldn't confirm that payment yet.") + " If you paid, you'll appear on the list within a few minutes."; }
-    }).catch(() => { box.className = "form-msg err"; box.textContent = "We couldn't confirm your payment right now. If you paid, you'll appear on the list within a few minutes."; });
+      else { box.className = "form-msg err"; box.textContent = (res.error || "We couldn't confirm that payment yet.") + " If you paid, you'll appear on the list within a few minutes."; loadMembers(); }
+    }).catch(() => { box.className = "form-msg err"; box.textContent = "We couldn't confirm your payment right now. If you paid, you'll appear on the list within a few minutes."; loadMembers(); });
   }
 
   // Member list
@@ -918,7 +918,12 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   const toTable = () => { const top = document.getElementById("members").querySelector(".members").getBoundingClientRect().top; if (top < 0) window.scrollBy(0, top - 90); };
   mPrev.addEventListener("click", () => { mPage--; renderMembers(); toTable(); });
   mNext.addEventListener("click", () => { mPage++; renderMembers(); toTable(); });
-  loadMembers();
+  if (paid && live) {
+    const saved = cachedMembers();
+    if (saved) { members = saved; renderMembers(); }
+  } else {
+    loadMembers();
+  }
   update();
 
 })();

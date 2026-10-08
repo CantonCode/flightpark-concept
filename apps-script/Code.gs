@@ -13,7 +13,7 @@
  *   SEND_EMAILS        "yes" to email pilots a confirmation (optional)
  */
 
-const VERSION = 'poc-8';
+const VERSION = 'poc-9';
 const TZ = 'Pacific/Auckland';
 const TAB = { members: 'Members', companies: 'Companies', passes: 'Passes' };
 const MEMBER_COLS = ['Member #', 'Added', 'First name', 'Last name', 'Email', 'Phone', 'NZHGPA PIN', 'Type', 'Pass',
@@ -400,6 +400,7 @@ function currentMembers_() {
   const cache = CacheService.getScriptCache();
   const hit = cache.get('members');
   if (hit) return JSON.parse(hit);
+  const stamp = cache.get('members-stamp');
   const t = membersTable_();
   const today = todayYmd_();
   const oldest = addDays_(today, -SHOW_EXPIRED_DAYS);
@@ -438,12 +439,16 @@ function currentMembers_() {
       starts, expires, status,
     };
   }).sort((a, b) => a.name.localeCompare(b.name));
-  cache.put('members', JSON.stringify(list), 60);
+  // Only cache this copy if nobody signed up or paid while we were reading the sheet.
+  if (cache.get('members-stamp') === stamp) cache.put('members', JSON.stringify(list), 60);
   return list;
 }
 
+/** Called after every write: drops the cached list and marks it as changed, so a read that started earlier can't re-cache old data. */
 function clearMembersCache_() {
-  CacheService.getScriptCache().remove('members');
+  const cache = CacheService.getScriptCache();
+  cache.remove('members');
+  cache.put('members-stamp', String(Date.now()) + Math.random(), 21600);
 }
 
 /* ---------------------------------------------------------------- sheet helpers (columns found by header name) */
