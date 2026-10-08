@@ -115,12 +115,13 @@ section.band.dark { background: var(--schist); color: #E7EEF3; }
 .toggle button { font: 700 .95rem/1 var(--display); font-stretch: 105%; border: 0; background: transparent; padding: 13px 20px; border-radius: 999px; cursor: pointer; color: var(--schist-2); }
 .toggle button[aria-selected="true"] { background: #fff; color: var(--schist); box-shadow: 0 2px 8px -2px rgba(0,0,0,.18); }
 .plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.plan { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r); padding: 26px 22px 22px; display: grid; gap: 14px; align-content: start; position: relative; transition: border-color .15s ease, transform .15s ease; }
+.plan { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r); padding: 26px 22px 22px; display: flex; flex-direction: column; gap: 14px; position: relative; transition: border-color .15s ease, transform .15s ease; }
+.plan .btn { margin-top: auto; }
 .plan:hover { border-color: var(--schist); transform: translateY(-2px); }
 .plan h3 { font-size: 1.15rem; font-weight: 800; }
 .price { font: 900 3rem/1 var(--display); font-stretch: 112%; letter-spacing: -0.03em; }
 .price sup { font-size: 1.2rem; vertical-align: top; position: relative; top: .45em; margin-right: 2px; }
-.perday { font: 500 .82rem/1.3 var(--data); color: var(--schist-2); }
+.perday { font: 400 .98rem/1.45 var(--body); color: var(--schist-2); }
 .plan .btn { justify-content: center; padding: 13px 18px; }
 .plan.best { border-color: var(--sock); }
 .plan .tag { position: absolute; top: -12px; left: 20px; background: var(--sock); color: #fff; font: 600 .7rem/1 var(--data); letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; }
@@ -138,7 +139,7 @@ section.band.dark { background: var(--schist); color: #E7EEF3; }
 .field { display: grid; gap: 6px; }
 .field label, .legend { font: 600 .88rem/1.2 var(--body); }
 .field .opt { font-weight: 500; color: var(--schist-2); }
-input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
+input[type="text"], input[type="email"], input[type="tel"], input[type="date"], input[type="password"], input[type="search"], select {
   font: 500 1rem/1.2 var(--body); color: var(--schist); background: var(--snow); border: 1.5px solid var(--line); border-radius: 10px; padding: 13px 14px; width: 100%; min-width: 0;
 }
 input:focus, select:focus { outline: none; border-color: var(--schist); background: #fff; }
@@ -190,6 +191,40 @@ input:focus, select:focus { outline: none; border-color: var(--schist); backgrou
 .op .kind { font: 600 .74rem/1 var(--data); letter-spacing: .1em; text-transform: uppercase; color: var(--lake); }
 .op h3 { font-size: 1.35rem; }
 .op .go { font: 600 .9rem/1 var(--body); color: var(--sock-dark); }
+
+/* Members */
+.members { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r); overflow: hidden; }
+.members-top { display: flex; gap: 14px; justify-content: space-between; align-items: center; padding: 18px; border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+.members-top input { max-width: 380px; }
+.m-tools { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.th-filter { position: relative; display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; cursor: pointer; border-radius: 999px; padding: 4px 8px; margin: -4px -8px; }
+.th-filter:hover { background: var(--line); color: var(--schist); }
+.th-filter:focus-within { outline: 2px solid var(--sock); outline-offset: 1px; }
+.th-filter select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; }
+.th-filter.on { background: var(--schist); color: #fff; text-transform: none; letter-spacing: 0; font: 600 .78rem/1 var(--body); }
+.m-clear { font: 600 .85rem/1 var(--body); color: var(--sock-dark); background: none; border: 0; padding: 6px 2px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.m-clear[hidden] { display: none; }
+.m-size { display: inline-flex; align-items: center; gap: 8px; font: 600 .85rem/1 var(--body); color: var(--schist-2); }
+.m-size select { width: auto; padding: 9px 30px 9px 12px; }
+.m-pager { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; flex-wrap: wrap; font: 500 .85rem/1.3 var(--data); color: var(--schist-2); }
+.m-pager[hidden] { display: none; }
+.m-pages { display: flex; gap: 8px; }
+.m-pages button { font: 600 .88rem/1 var(--body); color: var(--schist); background: var(--paper); border: 1.5px solid var(--line); border-radius: 999px; padding: 10px 14px; cursor: pointer; }
+.m-pages button:hover:not([disabled]) { border-color: var(--schist); }
+.m-pages button[disabled] { opacity: .4; cursor: default; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 620px; font-size: .95rem; }
+th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+th { font: 600 .74rem/1 var(--data); letter-spacing: .08em; text-transform: uppercase; color: var(--schist-2); background: var(--snow); }
+td.mono { font-family: var(--data); font-size: .85rem; }
+td.nowrap, .badge { white-space: nowrap; }
+.badge { font: 600 .74rem/1 var(--data); padding: 6px 9px; border-radius: 999px; white-space: nowrap; }
+.badge.ok { background: var(--ok-bg); color: var(--ok); }
+.badge.warn { background: var(--warn-bg); color: var(--warn); }
+.badge.info { background: #E3EEF8; color: var(--lake); }
+.badge.bad { background: var(--bad-bg); color: var(--bad); }
+tr.is-expired td { color: var(--schist-2); }
+.empty { padding: 22px 18px; color: var(--schist-2); margin: 0; }
 
 /* Contact */
 .contact { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
@@ -243,7 +278,7 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   .plan { padding: 20px 14px 14px; gap: 10px; }
   .plan h3 { font-size: 1rem; }
   .price { font-size: 2.3rem; }
-  .perday { font-size: .72rem; }
+  .perday { font-size: .86rem; }
   .plan .btn { padding: 11px 10px; font-size: .88rem; }
   .plan .tag { left: 12px; }
 }
@@ -260,6 +295,7 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
       <a href="#conditions">Conditions</a>
       <a href="#membership">Membership</a>
       <a href="#rules">Field rules</a>
+      <a href="#members">Members</a>
       <a href="#tandems">Tandems</a>
       <a class="btn btn-primary" href="#membership">Join from $10</a>
     </nav>
@@ -394,6 +430,8 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
       <p>You need an NZHGPA membership to land here. Then choose how long you're flying for. Your pass starts today, or on the date you pick.</p>
     </div>
 
+    <div id="paid-msg" class="form-msg" role="status" aria-live="polite" hidden style="margin-bottom:24px"></div>
+
     <div class="toggle" role="tablist" aria-label="Membership type">
       <button role="tab" id="tab-rec" aria-selected="true" aria-controls="panel-rec" type="button">Recreational &amp; students</button>
       <button role="tab" id="tab-com" aria-selected="false" aria-controls="panel-com" type="button">Commercial pilots</button>
@@ -401,10 +439,10 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
 
     <div id="panel-rec" role="tabpanel" aria-labelledby="tab-rec">
       <div class="plans">
-        <article class="plan"><h3>Day</h3><p class="price"><sup>$</sup>10</p><p class="perday">one flying day</p><button class="btn btn-dark" type="button" data-plan="day">Choose<span class="sr"> day</span></button></article>
-        <article class="plan"><h3>Week</h3><p class="price"><sup>$</sup>20</p><p class="perday">≈ $2.86 a day</p><button class="btn btn-dark" type="button" data-plan="week">Choose<span class="sr"> week</span></button></article>
-        <article class="plan"><h3>Month</h3><p class="price"><sup>$</sup>40</p><p class="perday">≈ $1.32 a day</p><button class="btn btn-dark" type="button" data-plan="month">Choose<span class="sr"> month</span></button></article>
-        <article class="plan best"><span class="tag">Best value</span><h3>Year</h3><p class="price"><sup>$</sup>80</p><p class="perday">≈ 22c a day · 8 day passes cost the same</p><button class="btn btn-primary" type="button" data-plan="year">Choose<span class="sr"> year</span></button></article>
+        <article class="plan"><h3>Day</h3><p class="price"><sup>$</sup>10</p><p class="perday">For when the forecast lines up.</p><button class="btn btn-dark" type="button" data-plan="day">Choose<span class="sr"> day</span></button></article>
+        <article class="plan"><h3>Week</h3><p class="price"><sup>$</sup>20</p><p class="perday">A week of chasing thermals.</p><button class="btn btn-dark" type="button" data-plan="week">Choose<span class="sr"> week</span></button></article>
+        <article class="plan"><h3>Month</h3><p class="price"><sup>$</sup>40</p><p class="perday">Settle in and fly every good afternoon.</p><button class="btn btn-dark" type="button" data-plan="month">Choose<span class="sr"> month</span></button></article>
+        <article class="plan best"><span class="tag">Best value</span><h3>Year</h3><p class="price"><sup>$</sup>80</p><p class="perday">Every good flying day, all year round.</p><button class="btn btn-primary" type="button" data-plan="year">Choose<span class="sr"> year</span></button></article>
       </div>
     </div>
 
@@ -422,7 +460,7 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
     </div>
 
     <form class="signup" id="signup" hidden novalidate>
-      <fieldset disabled style="display:grid; gap:18px; min-width:0; border:0; padding:0; margin:0">
+      <fieldset id="f-fields" style="display:grid; gap:18px; min-width:0; border:0; padding:0; margin:0">
         <div>
           <h3 id="form-title">Your membership</h3>
           <p class="small">Takes about a minute. We'll email your confirmation.</p>
@@ -436,6 +474,7 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
           <div class="field rec-only"><label for="f-start">Start date <span class="opt">(optional)</span></label><input type="date" id="f-start"></div>
           <div class="field commercial-only" hidden><label for="f-company">Your company</label>
             <select id="f-company"><option value="">Choose…</option><option>Coronet Peak Tandems</option><option>Extreme Air</option><option>G-Force</option><option>Infinity</option><option>Paraventures</option><option>Skytrek</option></select></div>
+          <div class="field commercial-only" hidden><label for="f-cpass">Company password</label><input type="password" id="f-cpass" autocomplete="off"></div>
           
         </div>
         <fieldset class="rec-only" style="border:0; padding:0; margin:0; display:grid; gap:8px">
@@ -460,10 +499,9 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
           <dt>Pass</dt><dd id="s-pass">Year</dd>
           <dt>Valid</dt><dd id="s-valid">–</dd>
         </dl>
-        <button class="btn btn-primary" type="submit" id="s-submit" style="justify-content:center" disabled>Pay $80 and join</button>
-        <p class="small" style="color:#FFB898; font-weight:600">Sign-up is switched off in this preview.</p>
+        <button class="btn btn-primary" type="submit" id="s-submit" style="justify-content:center">Pay $80 and join</button>
         <div class="pay" aria-label="Payment options in the live version"><span>Card</span><span>Apple Pay</span><span>Google Pay</span></div>
-        <p class="small" style="color:#A9B8C4">Concept: in the live version this step takes payment and adds you to the members list straight away.</p>
+        <p class="small" id="pay-note" style="color:#A9B8C4">You pay on Stripe's secure checkout page, then come straight back here and onto the list.</p>
       </aside>
     </form>
   </div>
@@ -543,6 +581,47 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   </div>
 </section>
 
+<section class="band alt" id="members" aria-labelledby="memlist-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Members</p>
+      <h2 id="memlist-title">Members</h2>
+      <p>Everyone with a current or pre-booked pass. New members appear as soon as they've paid, and passes that ended in the last 30 days stay listed as expired.</p>
+    </div>
+    <div class="members">
+      <div class="members-top">
+        <label for="m-search" class="sr">Search members</label>
+        <input type="search" id="m-search" placeholder="Search by name, member #, PIN or company">
+        <div class="m-tools">
+          <button type="button" class="m-clear" id="m-clear" hidden>Clear filters</button>
+          <label class="m-size" for="m-size">Show
+            <select id="m-size"><option value="10">10</option><option value="20" selected>20</option><option value="50">50</option></select>
+          </label>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">#</th><th scope="col">Name</th><th scope="col">PIN</th>
+            <th scope="col"><label class="th-filter" for="m-type"><span class="th-text" data-label="Type">Type</span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <select id="m-type" aria-label="Filter by membership type"><option value="">All</option><option value="Recreational">Recreational</option><option value="Commercial">Commercial</option></select></label></th>
+            <th scope="col">Company</th><th scope="col">Expires</th>
+            <th scope="col"><label class="th-filter" for="m-status"><span class="th-text" data-label="Status">Status</span><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 3.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <select id="m-status" aria-label="Filter by status"><option value="">All</option><option value="valid">Valid now</option><option value="soon">Expiring soon</option><option value="prebooked">Pre-booked</option><option value="expired">Expired</option></select></label></th></tr></thead>
+          <tbody id="m-body"></tbody>
+        </table>
+        <p class="empty" id="m-empty">Loading members…</p>
+      </div>
+      <div class="m-pager" id="m-pager" hidden>
+        <span id="m-range"></span>
+        <div class="m-pages">
+          <button type="button" id="m-prev">← Previous</button>
+          <button type="button" id="m-next">Next →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band" id="tandems" aria-labelledby="tan-title">
   <div class="wrap">
     <div class="head">
@@ -586,6 +665,8 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   <a class="btn btn-ghost" href="#conditions" style="background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.2)">Live wind</a>
 </div>
 
+<script src="assets/config.js"></script>
+<script src="assets/api.js"></script>
 <script>
 (() => {
   // Sticky header shadow
@@ -597,6 +678,7 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   const tabs = [...document.querySelectorAll('[role="tab"]')];
   tabs.forEach(t => t.addEventListener("click", () => {
     tabs.forEach(o => { o.setAttribute("aria-selected", String(o === t)); document.getElementById(o.getAttribute("aria-controls")).hidden = o !== t; });
+    if (!form.hidden) setMode(t.id === "tab-com" ? "com" : "rec");
   }));
 
   // Sign-up form
@@ -629,30 +711,214 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
     document.getElementById("s-valid").textContent = commercial ? "Set by your company" : (len === "day" ? fmt(start) : fmt(start) + " – " + fmt(endDate(start, len)));
     document.getElementById("s-submit").textContent = commercial ? "Join the list" : "Pay $" + PRICES[len] + " and join";
   }
+  // Apps Script takes a second or two to start; ping it while the pilot fills in the form.
+  let warmed = 0;
+  function warmUp() {
+    if (!live || Date.now() - warmed < 4 * 60 * 1000) return;
+    warmed = Date.now();
+    api.ping().catch(() => {});
+  }
+  function setMode(next, pass) {
+    mode = next;
+    if (next === "rec" && pass && pass !== "commercial") form.querySelector(`input[name="len"][value="${pass}"]`).checked = true;
+    msg.className = ""; msg.textContent = "";
+    form.querySelectorAll("input, select").forEach(el => el.style.borderColor = "");
+    document.getElementById("f-cpass").value = "";
+    update();
+  }
   document.querySelectorAll("[data-plan]").forEach(b => b.addEventListener("click", () => {
     const plan = b.dataset.plan;
-    mode = plan === "commercial" ? "com" : "rec";
-    if (mode === "rec") form.querySelector(`input[name="len"][value="${plan}"]`).checked = true;
-    form.hidden = false; msg.className = ""; msg.textContent = "";
-    update();
+    form.hidden = false;
+    setMode(plan === "commercial" ? "com" : "rec", plan);
+    warmUp();
     form.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
     setTimeout(() => document.getElementById("f-first").focus({ preventScroll: true }), 350);
   }));
   form.addEventListener("change", update);
   form.addEventListener("input", update);
-  form.addEventListener("submit", e => {
+  const cfg = window.FP_CONFIG || {};
+  const api = window.FP_API;
+  const fields = document.getElementById("f-fields");
+  const submitBtn = document.getElementById("s-submit");
+  const live = !cfg.preview && !!cfg.scriptUrl && !!api;
+  if (!live) {
+    fields.disabled = true; submitBtn.disabled = true;
+    document.getElementById("pay-note").textContent = "Sign-up is switched off in this preview.";
+  }
+  const nice = ymd => new Date(ymd + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "long", year: "numeric" });
+  const range = r => r.starts && r.starts !== r.expires ? nice(r.starts) + " to " + nice(r.expires) : nice(r.expires);
+  const FIELD_IDS = { first: "f-first", last: "f-last", email: "f-email", phone: "f-phone", pin: "f-pin", start: "f-start", company: "f-company", password: "f-cpass" };
+  function showError(text, field) {
+    msg.className = "form-msg err"; msg.textContent = text || "Something went wrong. Please try again.";
+    const el = field && document.getElementById(FIELD_IDS[field]);
+    if (el) { el.style.borderColor = "var(--bad)"; el.focus(); }
+  }
+
+  form.addEventListener("submit", async e => {
     e.preventDefault();
+    if (!live) return;
     const need = ["f-first", "f-last", "f-email", "f-phone"];
-    if (mode === "com") need.push("f-pin", "f-company");
+    if (mode === "com") need.push("f-pin", "f-company", "f-cpass");
+    form.querySelectorAll("input, select").forEach(el => el.style.borderColor = "");
     const missing = need.filter(id => !document.getElementById(id).value.trim());
-    const email = document.getElementById("f-email").value.trim();
-    if (missing.length) { msg.className = "form-msg err"; msg.textContent = "Fill in the highlighted fields to continue."; missing.forEach(id => document.getElementById(id).style.borderColor = "var(--bad)"); document.getElementById(missing[0]).focus(); return; }
-    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { msg.className = "form-msg err"; msg.textContent = "Check your email address. It should look like name@example.com."; document.getElementById("f-email").focus(); return; }
-    if (!document.getElementById("f-rules").checked || !document.getElementById("f-list").checked) { msg.className = "form-msg err"; msg.textContent = "Tick both boxes to agree to the field rules and the members list."; return; }
-    need.forEach(id => document.getElementById(id).style.borderColor = "");
-    msg.className = "form-msg ok";
-    msg.textContent = "Concept demo: nothing was sent. In the live version you'd pay here, get a confirmation email, and appear on the members list straight away.";
+    if (missing.length) { missing.forEach(id => document.getElementById(id).style.borderColor = "var(--bad)"); return showError("Fill in the highlighted fields to continue.", null) || document.getElementById(missing[0]).focus(); }
+    const v = id => document.getElementById(id).value.trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("f-email"))) return showError("Check your email address. It should look like name@example.com.", "email");
+    if (!document.getElementById("f-rules").checked || !document.getElementById("f-list").checked) return showError("Tick both boxes to agree to the field rules and the members list.");
+
+    const data = { first: v("f-first"), last: v("f-last"), email: v("f-email"), phone: v("f-phone"), pin: v("f-pin"), agreed: true };
+    const label = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = mode === "com" ? "Checking…" : "Opening secure checkout…";
+    msg.className = ""; msg.textContent = "";
+    try {
+      if (mode === "rec") {
+        const pass = form.querySelector('input[name="len"]:checked').value;
+        const res = await api.checkout({ ...data, pass, start: v("f-start"), returnUrl: location.origin + location.pathname });
+        if (res.ok && res.url) { window.location.href = res.url; return; }
+        showError(res.error, res.field);
+      } else {
+        const res = await api.commercial({ ...data, company: v("f-company"), password: document.getElementById("f-cpass").value });
+        if (res.ok) {
+          msg.className = "form-msg ok";
+          msg.textContent = (res.already ? "You're already on the list" : "You're on the list") + " as member #" + res.memberNo + " for " + res.company + ", valid until " + nice(res.expires) + ".";
+          document.getElementById("f-cpass").value = "";
+          loadMembers();
+        } else showError(res.error, res.field);
+      }
+    } catch (err) {
+      showError("Couldn't reach the sign-up service. Check your connection and try again.");
+    }
+    submitBtn.disabled = false; submitBtn.textContent = label;
   });
+  // Coming back from Stripe with the browser's back button
+  window.addEventListener("pageshow", () => { if (live) { submitBtn.disabled = false; update(); } });
+
+  // Returning from Stripe: ?paid=cs_…
+  const paid = new URLSearchParams(location.search).get("paid");
+  if (paid && live) {
+    const box = document.getElementById("paid-msg");
+    box.hidden = false; box.className = "form-msg"; box.textContent = "Confirming your payment…";
+    history.replaceState(null, "", location.pathname + "#membership");
+    document.getElementById("membership").scrollIntoView();
+    api.confirm(paid).then(res => {
+      if (res.ok) {
+        box.className = "form-msg ok";
+        const later = res.starts && res.starts > todayYmd;
+        box.textContent = "Payment received. You're member #" + res.memberNo + ": " + res.pass + ", " + (later ? "pre-booked for " : "valid ") + range(res) + ".";
+        loadMembers();
+      }
+      else { box.className = "form-msg err"; box.textContent = (res.error || "We couldn't confirm that payment yet.") + " If you paid, you'll appear on the list within a few minutes."; }
+    }).catch(() => { box.className = "form-msg err"; box.textContent = "We couldn't confirm your payment right now. If you paid, you'll appear on the list within a few minutes."; });
+  }
+
+  // Member list
+  const mBody = document.getElementById("m-body"), mEmpty = document.getElementById("m-empty");
+  const mSearch = document.getElementById("m-search"), mSize = document.getElementById("m-size");
+  const mPager = document.getElementById("m-pager"), mRange = document.getElementById("m-range");
+  const mPrev = document.getElementById("m-prev"), mNext = document.getElementById("m-next");
+  const mTypeSel = document.getElementById("m-type"), mStatusSel = document.getElementById("m-status"), mClear = document.getElementById("m-clear");
+  let members = [], mPage = 0;
+  const todayYmd = [today.getFullYear(), String(today.getMonth() + 1).padStart(2, "0"), String(today.getDate()).padStart(2, "0")].join("-");
+  const daysLeft = m => Math.round((new Date(m.expires + "T00:00:00") - today) / 864e5);
+  // expired: ended (shown for 30 days) · prebooked: starts later · soon: valid now, ends within 14 days · valid: valid now
+  function statusOf(m) {
+    if (m.status === "expired" || m.expires < todayYmd) return "expired";
+    if (m.status === "prebooked" || (m.starts && m.starts > todayYmd)) return "prebooked";
+    return daysLeft(m) <= 14 ? "soon" : "valid";
+  }
+  try { const saved = localStorage.getItem("fp-members-size"); if (["10", "20", "50"].includes(saved)) mSize.value = saved; } catch (_) {}
+  const esc = t => String(t).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const tableDate = ymd => new Date(ymd + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "short", year: "numeric" });
+  const shortDate = ymd => new Date(ymd + "T00:00:00").toLocaleDateString("en-NZ", { day: "numeric", month: "short" });
+  function badge(m) {
+    const st = statusOf(m);
+    if (st === "expired") return '<span class="badge bad">Expired ' + shortDate(m.expires) + "</span>";
+    if (st === "prebooked") return '<span class="badge info">Starts ' + shortDate(m.starts) + "</span>";
+    const days = daysLeft(m);
+    if (days <= 0) return '<span class="badge warn">Expires today</span>';
+    if (st === "soon") return '<span class="badge warn">' + days + " day" + (days === 1 ? "" : "s") + " left</span>";
+    return '<span class="badge ok">Current</span>';
+  }
+  function renderMembers() {
+    const q = mSearch.value.trim().toLowerCase();
+    const searched = members.filter(m => !q || [m.no, m.name, m.pin, m.company, m.type].join(" ").toLowerCase().includes(q));
+    const mType = mTypeSel.value, mStatus = mStatusSel.value;
+    const byType = list => mType ? list.filter(m => m.type === mType) : list;
+    const byStatus = (list, st) => !st ? list : list.filter(m => st === "valid" ? ["valid", "soon"].includes(statusOf(m)) : statusOf(m) === st);
+    // each filter's counts respect the other filter's choice
+    const typePool = byStatus(searched, mStatus);
+    [...mTypeSel.options].forEach(o => {
+      const n = o.value ? typePool.filter(m => m.type === o.value).length : typePool.length;
+      o.textContent = (o.value || "All") + (members.length ? " (" + n + ")" : "");
+    });
+    const statusPool = byType(searched);
+    [...mStatusSel.options].forEach(o => {
+      const label = { "": "All", valid: "Valid now", soon: "Expiring soon", prebooked: "Pre-booked", expired: "Expired" }[o.value];
+      o.textContent = label + (members.length ? " (" + byStatus(statusPool, o.value).length + ")" : "");
+    });
+    [mTypeSel, mStatusSel].forEach(sel => {
+      const wrap = sel.closest(".th-filter"), text = wrap.querySelector(".th-text");
+      wrap.classList.toggle("on", !!sel.value);
+      text.textContent = sel.value ? sel.options[sel.selectedIndex].textContent.replace(/ \(\d+\)$/, "") : text.dataset.label;
+    });
+    mClear.hidden = !mType && !mStatus && !q;
+    const rows = byStatus(byType(searched), mStatus)
+      .slice().sort((a, b) => (statusOf(a) === "expired") - (statusOf(b) === "expired") || a.name.localeCompare(b.name));
+    const size = Number(mSize.value);
+    const pages = Math.max(1, Math.ceil(rows.length / size));
+    mPage = Math.min(mPage, pages - 1);
+    const shown = rows.slice(mPage * size, mPage * size + size);
+    mBody.innerHTML = shown.map(m => '<tr' + (statusOf(m) === "expired" ? ' class="is-expired"' : "") + '><td class="mono">' + esc(m.no ? "#" + m.no : "–") + "</td><td>" + esc(m.name) + '</td><td class="mono">' + esc(m.pin || "–") + "</td><td>" + esc(m.type) + "</td><td>" + esc(m.company || "–") + '</td><td class="mono nowrap">' + esc(tableDate(m.expires)) + "</td><td>" + badge(m) + "</td></tr>").join("");
+    mEmpty.hidden = rows.length > 0;
+    mEmpty.textContent = !members.length ? "No current members yet." : q ? "No members match that search." : "No members match those filters.";
+    mPager.hidden = rows.length === 0;
+    mRange.textContent = rows.length ? (mPage * size + 1) + "–" + (mPage * size + shown.length) + " of " + rows.length + " member" + (rows.length === 1 ? "" : "s") : "";
+    mPrev.disabled = mPage === 0;
+    mNext.disabled = mPage >= pages - 1;
+  }
+  // A pilot with several passes shows once, with the pass that runs latest.
+  function onePerPilot(list) {
+    const best = new Map();
+    list.forEach(m => {
+      const key = m.no ? "#" + m.no : m.name.toLowerCase();
+      const prev = best.get(key);
+      if (!prev || (m.status ? false : m.expires > prev.expires)) best.set(key, m);
+    });
+    return [...best.values()].sort((a, b) => a.name.localeCompare(b.name));
+  }
+  const CACHE_KEY = "fp-members";
+  function cachedMembers() {
+    try {
+      const c = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+      return c && Array.isArray(c.members) ? c.members : null;
+    } catch (_) { return null; }
+  }
+  async function loadMembers() {
+    if (!cfg.scriptUrl || !api) { mEmpty.textContent = "The member list isn't connected yet."; return; }
+    const cached = cachedMembers();
+    if (cached && !members.length) { members = cached; renderMembers(); }
+    try {
+      const res = await api.members();
+      if (!res.ok) throw new Error(res.error);
+      members = onePerPilot(res.members || []);
+      renderMembers();
+      try { localStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), members })); } catch (_) {}
+    } catch (err) {
+      if (!members.length) { mEmpty.hidden = false; mEmpty.textContent = "Couldn't load the member list. Try refreshing the page."; }
+    }
+  }
+  mSearch.addEventListener("input", () => { mPage = 0; renderMembers(); });
+  [mTypeSel, mStatusSel].forEach(sel => sel.addEventListener("change", () => { mPage = 0; renderMembers(); }));
+  mClear.addEventListener("click", () => { mTypeSel.value = ""; mStatusSel.value = ""; mSearch.value = ""; mPage = 0; renderMembers(); });
+  mSize.addEventListener("change", () => {
+    mPage = 0; renderMembers();
+    try { localStorage.setItem("fp-members-size", mSize.value); } catch (_) {}
+  });
+  const toTable = () => { const top = document.getElementById("members").querySelector(".members").getBoundingClientRect().top; if (top < 0) window.scrollBy(0, top - 90); };
+  mPrev.addEventListener("click", () => { mPage--; renderMembers(); toTable(); });
+  mNext.addEventListener("click", () => { mPage++; renderMembers(); toTable(); });
+  loadMembers();
   update();
 
 })();
