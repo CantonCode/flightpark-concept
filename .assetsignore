@@ -1,0 +1,5 @@
+# files Cloudflare should not publish as part of the website
+.assetsignore
+.gitignore
+apps-script/
+NOTES.md
