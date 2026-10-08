@@ -164,6 +164,33 @@ input:focus, select:focus { outline: none; border-color: var(--schist); backgrou
 .form-msg.err { background: var(--bad-bg); color: var(--bad); }
 .commercial-only[hidden], .rec-only[hidden] { display: none !important; }
 
+/* Payment / sign-up dialog */
+.pay-dialog { border: 0; border-radius: 20px; padding: 32px 28px 26px; width: min(420px, calc(100vw - 32px)); background: var(--paper); color: var(--schist); box-shadow: 0 30px 80px -20px rgba(10,20,30,.55); text-align: center; }
+.pay-dialog::backdrop { background: rgba(16,24,32,.55); backdrop-filter: blur(3px); }
+.pay-dialog [hidden] { display: none !important; }
+.pay-dialog[open] { animation: pd-in .28s ease-out; }
+@keyframes pd-in { from { opacity: 0; transform: translateY(12px) scale(.97); } }
+.pay-dialog h3 { font-size: 1.55rem; font-weight: 850; margin: 14px 0 8px; }
+.pay-dialog p { color: var(--schist-2); font-size: 1rem; }
+.pd-icon { width: 72px; height: 72px; margin: 0 auto; display: grid; place-items: center; }
+.pd-spinner { width: 54px; height: 54px; border-radius: 50%; border: 5px solid #FFE1D3; border-top-color: var(--sock); animation: pd-spin .9s linear infinite; }
+@keyframes pd-spin { to { transform: rotate(360deg); } }
+.pd-icon svg { width: 72px; height: 72px; }
+.pd-check circle { fill: var(--ok-bg); }
+.pd-check path { fill: none; stroke: var(--ok); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 48; stroke-dashoffset: 48; animation: pd-draw .45s .15s ease-out forwards; }
+@keyframes pd-draw { to { stroke-dashoffset: 0; } }
+.pd-warn circle { fill: var(--warn-bg); }
+.pd-warn path { fill: none; stroke: var(--warn); stroke-width: 5; stroke-linecap: round; }
+.pd-member { margin: 20px auto 4px; display: inline-grid; gap: 4px; padding: 14px 22px; border-radius: 14px; background: var(--schist); color: #fff; }
+.pd-member span { font: 600 .72rem/1 var(--data); letter-spacing: .12em; text-transform: uppercase; color: #A9B8C4; }
+.pd-member b { font: 900 2.2rem/1 var(--display); font-stretch: 112%; letter-spacing: -.02em; }
+.pd-details { margin: 16px 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 14px; text-align: left; font-size: .95rem; border-top: 1px solid var(--line); padding-top: 16px; }
+.pd-details dt { color: var(--schist-2); }
+.pd-details dd { margin: 0; font-weight: 600; }
+.pd-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 22px; }
+.pd-actions .btn { padding: 13px 18px; }
+@media (prefers-reduced-motion: reduce) { .pay-dialog[open], .pd-spinner, .pd-check path { animation: none; } .pd-check path { stroke-dashoffset: 0; } }
+
 /* Rules */
 .rules { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
 .zone { margin: 0; background: var(--paper); border-radius: var(--r); border: 1.5px solid var(--line); padding: 12px; position: sticky; top: 96px; display: grid; gap: 12px; }
@@ -666,6 +693,18 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   <a class="btn btn-ghost" href="#conditions" style="background:rgba(255,255,255,.12); color:#fff; border-color:rgba(255,255,255,.2)">Live wind</a>
 </div>
 
+<dialog class="pay-dialog" id="pay-dialog" aria-labelledby="pd-title" aria-describedby="pd-text">
+  <div class="pd-icon" id="pd-icon" aria-hidden="true"></div>
+  <h3 id="pd-title">Confirming your payment…</h3>
+  <p id="pd-text">This only takes a few seconds.</p>
+  <div class="pd-member" id="pd-member" hidden><span>Member number</span><b id="pd-no"></b></div>
+  <dl class="pd-details" id="pd-details" hidden></dl>
+  <div class="pd-actions" id="pd-actions" hidden>
+    <a class="btn btn-ghost" href="#members" id="pd-list">See the member list</a>
+    <button class="btn btn-primary" type="button" id="pd-done">Done</button>
+  </div>
+</dialog>
+
 <script src="assets/config.js"></script>
 <script src="assets/api.js"></script>
 <script>
@@ -808,6 +847,12 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
         if (res.ok) {
           msg.className = "form-msg ok";
           msg.textContent = (res.already ? "You're already on the list" : "You're on the list") + " as member #" + res.memberNo + " for " + res.company + ", valid until " + nice(res.expires) + ".";
+          payDialog("ok", {
+            title: (res.already ? "You're already on the list" : "You're on the list") + (res.name ? ", " + res.name : "") + "!",
+            text: "Commercial membership with " + res.company + ".",
+            memberNo: res.memberNo,
+            rows: [["Company", res.company], ["Valid until", nice(res.expires)]],
+          });
           document.getElementById("f-cpass").value = "";
           loadMembers();
         } else showError(res.error, res.field);
@@ -820,6 +865,31 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   // Coming back from Stripe with the browser's back button
   window.addEventListener("pageshow", () => { if (live) { submitBtn.disabled = false; update(); } });
 
+  // Pop-up for payment confirmation and commercial sign-up
+  const dlg = document.getElementById("pay-dialog");
+  const CHECK = '<svg class="pd-check" viewBox="0 0 72 72"><circle cx="36" cy="36" r="34"/><path d="M22 37.5l9.5 9.5L51 27.5"/></svg>';
+  const WARN = '<svg class="pd-warn" viewBox="0 0 72 72"><circle cx="36" cy="36" r="34"/><path d="M36 21v20M36 50v1"/></svg>';
+  function payDialog(state, info = {}) {
+    dlg.dataset.state = state;
+    const $ = id => document.getElementById(id);
+    $("pd-icon").innerHTML = state === "loading" ? '<span class="pd-spinner"></span>' : state === "ok" ? CHECK : WARN;
+    $("pd-title").textContent = info.title || "Confirming your payment…";
+    $("pd-text").textContent = info.text || "This only takes a few seconds.";
+    $("pd-member").hidden = !info.memberNo;
+    $("pd-no").textContent = info.memberNo ? "#" + info.memberNo : "";
+    $("pd-details").hidden = !(info.rows && info.rows.length);
+    $("pd-details").innerHTML = (info.rows || []).map(([k, v]) => "<dt>" + esc(k) + "</dt><dd>" + esc(v) + "</dd>").join("");
+    $("pd-actions").hidden = state === "loading";
+    $("pd-list").hidden = state !== "ok";
+    if (!dlg.open) { if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); }
+    if (state !== "loading") $("pd-done").focus();
+  }
+  const closeDialog = () => { if (dlg.open) dlg.close ? dlg.close() : dlg.removeAttribute("open"); };
+  dlg.addEventListener("cancel", e => { if (dlg.dataset.state === "loading") e.preventDefault(); });
+  dlg.addEventListener("click", e => { if (e.target === dlg && dlg.dataset.state !== "loading") closeDialog(); });
+  document.getElementById("pd-done").addEventListener("click", closeDialog);
+  document.getElementById("pd-list").addEventListener("click", closeDialog);
+
   // Returning from Stripe: ?paid=cs_…
   const paid = new URLSearchParams(location.search).get("paid");
   if (paid && live) {
@@ -827,15 +897,31 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
     box.hidden = false; box.className = "form-msg"; box.textContent = "Confirming your payment…";
     history.replaceState(null, "", location.pathname + "#membership");
     document.getElementById("membership").scrollIntoView();
+    payDialog("loading");
+    const notYet = "If you paid, you'll appear on the list within 15 minutes.";
     api.confirm(paid).then(res => {
       if (res.ok) {
-        box.className = "form-msg ok";
         const later = res.starts && res.starts > todayYmd;
+        box.className = "form-msg ok";
         box.textContent = "Payment received. You're member #" + res.memberNo + ": " + res.pass + ", " + (later ? "pre-booked for " : "valid ") + range(res) + ".";
-        loadMembers();
+        payDialog("ok", {
+          title: "You're on the list" + (res.name ? ", " + res.name : "") + "!",
+          text: later ? "Payment received. Your pass is booked and ready to go." : "Payment received. You're good to land at the Flight Park.",
+          memberNo: res.memberNo,
+          rows: [["Pass", res.pass], [later ? "Pre-booked" : "Valid", range(res)]],
+        });
+      } else {
+        box.className = "form-msg err";
+        box.textContent = (res.error || "We couldn't confirm that payment yet.") + " " + notYet;
+        payDialog("err", { title: "We couldn't confirm that yet", text: (res.error || "Stripe hasn't confirmed this payment.") + " " + notYet });
       }
-      else { box.className = "form-msg err"; box.textContent = (res.error || "We couldn't confirm that payment yet.") + " If you paid, you'll appear on the list within a few minutes."; loadMembers(); }
-    }).catch(() => { box.className = "form-msg err"; box.textContent = "We couldn't confirm your payment right now. If you paid, you'll appear on the list within a few minutes."; loadMembers(); });
+      loadMembers();
+    }).catch(() => {
+      box.className = "form-msg err";
+      box.textContent = "We couldn't confirm your payment right now. " + notYet;
+      payDialog("err", { title: "We couldn't confirm that yet", text: "The connection dropped while checking. " + notYet });
+      loadMembers();
+    });
   }
 
   // Member list
