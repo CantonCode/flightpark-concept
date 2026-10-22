@@ -5,11 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Flight Park Queenstown | Landing field for paraglider and hang glider pilots</title>
 <meta name="description" content="Queenstown's landing field for NZHGPA paraglider and hang glider pilots. Day, week, month and year memberships from $10, live wind at the field, and the field rules in one place.">
-<meta name="robots" content="noindex, nofollow">
-<meta property="og:title" content="Flight Park Queenstown: website concept">
+<link rel="canonical" href="https://flightpark.co.nz/">
+<meta property="og:title" content="Flight Park Queenstown">
+<meta property="og:url" content="https://flightpark.co.nz/">
+<meta property="og:image" content="https://flightpark.co.nz/assets/landing-zone.jpg">
+<meta property="og:site_name" content="Flight Park Queenstown">
+<meta property="og:locale" content="en_NZ">
 <meta property="og:description" content="Land at Queenstown's Flight Park. Memberships from $10 a day, live wind at the field.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#16202A">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "SportsActivityLocation", "name": "Flight Park Queenstown", "description": "Queenstown's landing field for NZHGPA paraglider and hang glider pilots, with day, week, month and year memberships.", "url": "https://flightpark.co.nz/", "telephone": "+64 21 229 8222", "email": "membership@flightpark.co.nz", "image": "https://flightpark.co.nz/assets/landing-zone.jpg", "address": {"@type": "PostalAddress", "streetAddress": "Malaghans Road", "addressLocality": "Queenstown", "addressCountry": "NZ"}, "priceRange": "$10–$80"}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -51,13 +56,9 @@ p { margin: 0; }
 .btn-dark { background: var(--schist); color: #fff; }
 :focus-visible { outline: 3px solid var(--sock); outline-offset: 3px; border-radius: 6px; }
 
-/* Concept ribbon */
-.concept { background: var(--schist); color: #DCE6EE; font: 500 0.8rem/1.4 var(--data); text-align: center; padding: 7px 16px; letter-spacing: 0.04em; }
-.concept b { color: #fff; font-weight: 600; }
 
 fieldset[disabled] input, fieldset[disabled] select { opacity: .7; cursor: not-allowed; }
 #s-submit[disabled] { opacity: .55; cursor: not-allowed; transform: none; }
-.concept a { text-underline-offset: 2px; }
 
 /* Header */
 header.site { position: sticky; top: 0; z-index: 30; transition: background .2s ease, box-shadow .2s ease; }
@@ -92,6 +93,10 @@ header.site.scrolled { background: rgba(243,246,248,.88); backdrop-filter: satur
 /* Sections */
 section.band { padding-block: clamp(64px, 9vw, 110px); }
 section.band.alt { background: var(--paper); }
+.terms-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 48px; }
+.terms-grid h3 { margin: 0 0 10px; font-size: 1.15rem; }
+.terms-grid ul { margin: 0; padding-left: 1.1em; display: grid; gap: 8px; color: var(--schist-2); }
+@media (max-width: 760px) { .terms-grid { grid-template-columns: minmax(0, 1fr); } }
 section.band.dark { background: var(--schist); color: #E7EEF3; }
 .head { display: grid; gap: 14px; max-width: 760px; margin-bottom: clamp(30px, 4vw, 48px); }
 .head h2 { font-size: clamp(2rem, 4.2vw, 3.2rem); font-weight: 850; }
@@ -293,7 +298,6 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   .hero { min-height: 760px; }
   .hero svg.scene { height: 60%; top: auto; bottom: 0; -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 30%); mask-image: linear-gradient(180deg, transparent 0, #000 30%); }
   .links .btn { display: none; }
-  .concept { font-size: .7rem; }
   .hero::after { background: linear-gradient(180deg, rgba(243,246,248,.5) 0%, rgba(243,246,248,0) 45%); }
   .hero .wrap { padding-top: 120px; }
   .grid2, .lengths { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -314,7 +318,6 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
 </head>
 <body>
 
-<div class="concept"><b>Concept preview</b> · not the live Flight Park site · real site: <a href="https://www.flightpark.co.nz/" style="color:#fff">flightpark.co.nz</a></div>
 
 <header class="site" id="top">
   <div class="wrap nav">
@@ -681,10 +684,40 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
   </div>
 </section>
 
+<section class="band alt" id="terms" aria-labelledby="terms-title">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">The fine print</p>
+      <h2 id="terms-title">Passes, refunds and privacy</h2>
+    </div>
+    <div class="terms-grid">
+      <div>
+        <h3>Passes and refunds</h3>
+        <ul>
+          <li>Your pass starts on the date you choose, or on the day you pay if you don't pick one.</li>
+          <li>Passes can't be refunded once they've started.</li>
+          <li>Pre-booked a pass and your plans changed? Email us before the start date and we'll move it or refund it.</li>
+          <li>Payments are in NZ dollars and go through Stripe. You'll get a receipt by email.</li>
+          <li>Nothing here affects your rights under the Consumer Guarantees Act.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Privacy</h3>
+        <ul>
+          <li>We collect your name, email, phone and NZHGPA PIN to run memberships and contact you about the field.</li>
+          <li>The member list on this page shows your name, member number, NZHGPA PIN, pass type, company (if any) and pass dates, so pilots and operators can check who's current.</li>
+          <li>Stripe handles card payments. We never see or store your card details.</li>
+          <li>To see, correct or remove your details, email <a href="mailto:membership@flightpark.co.nz">membership@flightpark.co.nz</a>. We follow the Privacy Act 2020.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
-    <span style="display:flex; align-items:center; gap:14px"><img src="assets/logo-light.png" alt="" width="74" height="36" style="height:36px; width:auto">Concept design for Flight Park Queenstown · October 2026</span>
-    <span>Facts and logo from flightpark.co.nz</span>
+    <span style="display:flex; align-items:center; gap:14px"><img src="assets/logo-light.png" alt="" width="74" height="36" style="height:36px; width:auto">© <span id="fp-year">2026</span> Flight Park Queenstown</span>
+    <span><a href="#terms" style="color:#DCE6EE">Passes, refunds &amp; privacy</a></span>
   </div>
 </footer>
 
@@ -1040,5 +1073,6 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
 
 })();
 </script>
+<script>document.getElementById("fp-year").textContent=new Date().getFullYear()</script>
 </body>
 </html>

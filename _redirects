@@ -1,0 +1,6 @@
+/info.html /#rules 301
+/index.html / 301
+/subscriptions/recreational.html /#membership 301
+/subscriptions/work.html /#membership 301
+/subscriptions/database.html /#members 301
+/subscriptions/* /#membership 301
