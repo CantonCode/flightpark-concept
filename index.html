@@ -1026,7 +1026,7 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
     });
     mClear.hidden = !mType && !mStatus && !q;
     const rows = byStatus(byType(searched), mStatus)
-      .slice().sort((a, b) => (statusOf(a) === "expired") - (statusOf(b) === "expired") || a.name.localeCompare(b.name));
+      .slice().sort((a, b) => (statusOf(a) === "expired") - (statusOf(b) === "expired") || (Number(b.no) || 0) - (Number(a.no) || 0) || a.name.localeCompare(b.name));
     const size = Number(mSize.value);
     const pages = Math.max(1, Math.ceil(rows.length / size));
     mPage = Math.min(mPage, pages - 1);
