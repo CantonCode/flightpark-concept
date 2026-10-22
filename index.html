@@ -932,7 +932,24 @@ footer .wrap { display: flex; justify-content: space-between; align-items: cente
     document.getElementById("membership").scrollIntoView();
     payDialog("loading");
     const notYet = "If you paid, you'll appear on the list within 15 minutes.";
-    api.confirm(paid).then(res => {
+    // Confirming is safe to repeat, so retry slow or dropped checks (and Stripe catching up) before giving up.
+    const wait = ms => new Promise(r => setTimeout(r, ms));
+    async function confirmWithRetry(id) {
+      let last;
+      for (let attempt = 0; attempt < 4; attempt++) {
+        if (attempt) {
+          const t = document.getElementById("pd-text"); if (t) t.textContent = "Still checking with Stripe. This can take a few more seconds…";
+          await wait(2500 * attempt);
+        }
+        try {
+          last = await api.confirm(id, 25000);
+          if (last.ok || !/not gone through|did not respond|went wrong/i.test(last.error || "")) return last;
+        } catch (err) { last = null; }
+      }
+      if (last) return last;
+      throw new Error("confirm failed");
+    }
+    confirmWithRetry(paid).then(res => {
       if (res.ok) {
         const later = res.starts && res.starts > todayYmd;
         box.className = "form-msg ok";
