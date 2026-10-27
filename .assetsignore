@@ -3,3 +3,5 @@
 .gitignore
 apps-script/
 NOTES.md
+build-pages.sh
+dist/
